@@ -1,6 +1,7 @@
 import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from 'react'
 import {NavLink, useLocation} from 'react-router-dom'
 import { useAppStore } from '../stores/useAppStore'
+import ErrorMessage from './ErrorMessage'
 
 export default function Header() {
 
@@ -12,7 +13,7 @@ export default function Header() {
         category: ''
 
     })
-    const [error, setError] = useState(false)
+    const [error, setError] = useState('')
 
     const fetCategory = useAppStore((state) => state.fetCategory)
     const categories = useAppStore((state) => state.categories)
@@ -31,10 +32,10 @@ export default function Header() {
         e.preventDefault()
 
         if(Object.values(searchFilters).includes('')) {
-            setError(true)
+            setError('Todos los campos son obligatorios')
             return
         }
-        setError(false)
+        setError('')
 
         searchRecipes(searchFilters)
 
@@ -59,6 +60,7 @@ export default function Header() {
 
                 {isHome && (
                     <form className='md:w-1/2 2xl:w-1/3 bg-orange-400 my-32 p-10 rounded-lg shadow space-y-6' onSubmit={handleSubmit}>
+                        {error && <ErrorMessage>{error}</ErrorMessage>}
                         <div className='space-y-4'>
                             <label 
                                 className='block text-white uppercase font-extrabold text-lg' 
