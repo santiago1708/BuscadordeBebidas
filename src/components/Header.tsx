@@ -19,7 +19,7 @@ export default function Header() {
     const categories = useAppStore((state) => state.categories)
     const searchRecipes = useAppStore((state) => state.searchRecipes)
 
-    useEffect(() => {fetCategory()})
+    useEffect(() => {fetCategory()},[])
 
     const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>) => {
         setSearchFilter({
@@ -36,7 +36,6 @@ export default function Header() {
             return
         }
         setError('')
-
         searchRecipes(searchFilters)
 
     }
