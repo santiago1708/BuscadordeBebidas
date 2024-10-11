@@ -6,6 +6,8 @@ export default function Modal() {
     const modal = useAppStore(state => state.modal)
     const closeModal = useAppStore(state => state.closeModal)
     const drinkRecipe = useAppStore((state) => state.drinkRecipe)
+    const handleCliclFavorite = useAppStore((state) => state.handleCliclFavorite)
+    const favoriteExist = useAppStore((state) => state.favoriteExist)
 
     const renderIngredients = () => {
         const ingredients : JSX.Element[] = []
@@ -73,15 +75,22 @@ export default function Modal() {
                                     <Dialog.Title as="h3" className="text-gray-900 text-2xl font-extrabold my-5">
                                         Instrucciones
                                         <p className='text-lg'>{drinkRecipe.strInstructions}</p>
-                                        <div className='mt-5'>
+                                        <div className='mt-5 flex justify-between gap-5'>
                                             <button
                                                 type='button'
-                                                className='w-full rounded-lg bg-gray-600 p-3 uppercase font-bold shadow text-white hover:bg-gray-700'
+                                                className='w-full rounded-lg bg-orange-600 p-3 uppercase font-bold shadow text-white hover:bg-orange-700 text-lg'
+                                                onClick={() => 
+                                                    {
+                                                        handleCliclFavorite(drinkRecipe) 
+                                                        closeModal()
+                                                    }}
+                                            >{!favoriteExist(drinkRecipe.idDrink) ? 'Agregar a Favoritos' : 'Eliminar de Favoritos'}</button>
+                                            <button
+                                                type='button'
+                                                className='w-full rounded-lg bg-gray-600 p-3 uppercase font-bold shadow text-white hover:bg-gray-700 text-lg'
+                                                onClick={closeModal}
                                             >Cerrar</button>
-                                            <button
-                                                type='button'
-                                                className='w-full rounded-lg bg-gray-600 p-3 uppercase font-bold shadow text-white hover:bg-gray-700'
-                                            >Agregar a Favoritos</button>
+
                                         </div>
                                     </Dialog.Title>
                                 </Dialog.Panel>
