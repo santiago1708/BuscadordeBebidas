@@ -18,6 +18,7 @@ export default function Header() {
     const fetCategory = useAppStore((state) => state.fetCategory)
     const categories = useAppStore((state) => state.categories)
     const searchRecipes = useAppStore((state) => state.searchRecipes)
+    const showNotification = useAppStore((state) => state.showNotification)
 
     useEffect(() => {fetCategory()},[])
 
@@ -33,6 +34,10 @@ export default function Header() {
 
         if(Object.values(searchFilters).includes('')) {
             setError('Todos los campos son obligatorios')
+            showNotification({
+                text: 'No se pudo realizar la busqueda',
+                error: true
+            })
             return
         }
         setError('')
